@@ -1,0 +1,3 @@
+usr/include/KF6/KPty/
+usr/lib/*/cmake/KF6Pty/
+usr/lib/*/libKF6Pty.so
