@@ -1,4 +1,20 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+include /usr/share/dpkg/architecture.mk
+
+ifneq ($(DEB_BUILD_ARCH),$(DEB_HOST_ARCH))
+	extra_cmake_args += -DUTEMPTER_EXECUTABLE=/usr/lib/$(DEB_HOST_MULTIARCH)/utempter/utempter
+endif
 
 %:
-	dh $@
+	dh $@ --without build_stamp
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DBUILD_QCH=ON $(extra_cmake_args)
+
+override_dh_auto_test:
+	# Disable dh_auto_test at build time
+	:
